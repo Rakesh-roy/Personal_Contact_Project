@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Contact Book{% endblock %}
+{% block body %}
+    <style>
+    .fa{
+        font-size: 42px;
+    }
+    .add-contact{
+        padding: 20px 25%;
+    }
+    @media screen and (max-width: 770px){
+        .heading{
+            font-size: 24px;
+        }
+        .add-contact{
+            padding: 10% 5%;
+        }
+    }
+    </style>
+
+    <div class="container">
+    <div class="row m-4">
+        <div class="col">
+            <div class="card bg-info">
+                <h1 class="display-4 heading text-center text-light">Add Contact</h1>
+                <form action="{% url 'add_contact' %}" method="post">
+                    {% csrf_token %}
+                    <div class="card text-info add-contact">
+                    <input hidden name="owner" id="id_owner" value="{{ request.user.id }}">
+                    <a class="text-info" href="{% url 'home' %}" style="text-align: right"><i class="fa fa-chevron-circle-left p-2" aria-hidden="true"></i></a>
+                        <label for="id_name">Name:</label><input class="form-control" type="text" name="name" maxlength="100" required="" id="id_name">
+                        <label for="id_contact">Contact:</label><input class="form-control" type="text" name="contact" maxlength="10" required="" id="id_contact">
+                        <label for="id_email">Email:</label><input class="form-control" type="email" name="email" maxlength="100" id="id_email">
+                        <label for="id_category">Category:</label><select class="form-control" name="category" required="" id="id_category">
+                          <option value="" selected="">---------</option>
+
+                          <option value="Friends">Friends</option>
+
+                          <option value="Family">Family</option>
+
+                          <option value="Office">Office</option>
+
+                          <option value="Faculty">Faculty</option>
+
+                        </select>
+                        {% for x in messages %}
+                        <div class="alert-success text-center mt-2 p-2">
+                            {{ x }}
+                        </div>
+                        {% endfor %}
+
+                        <button type="submit" class="btn btn-info mt-4">Submit</button>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

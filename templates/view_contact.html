@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Contact Book{% endblock %}
+{% block body %}
+    <style>
+    .fa{
+        font-size: 34px;
+    }
+    .view-contact{
+        margin: 50px auto;
+        font-size: 24px;
+        width: 600px
+    }
+    @media screen and (max-width: 770px){
+        .fa{
+            font-size: 28px;
+        }
+        .heading{
+            font-size: 24px;
+        }
+        .view-contact {
+            margin: 0;
+            font-size: 20px;
+            width: 100%;
+        }
+    }
+    </style>
+
+    <div class="container">
+    {% for x in messages %}
+    <div class="alert-success text-center m-4 p-2">
+        {{ x }}
+    </div>
+    {% endfor %}
+    <div class="row m-4">
+        <div class="col">
+            <div class="card bg-info">
+                <h1 class="display-4 heading text-center text-light p-2">Contact Details</h1>
+                <form action="{% url 'add_contact' %}" method="post">
+                    {% csrf_token %}
+                    <div class="card text-info">
+                    <a class="text-info" href="{% url 'home' %}" style="text-align: right"><i class="fa fa-chevron-circle-left p-2" aria-hidden="true"></i></a>
+                        <div class="content card p-2 text-info view-contact" style="">
+                            <p><i class="fa fa-user p-2" aria-hidden="true"></i> {{ contact.name }} </p>
+                            <hr>
+                            <p><i class="fa fa-phone-square p-2" aria-hidden="true"></i> +91 {{ contact.contact }} </p>
+                            <hr>
+                            <p><i class="fa fa-envelope p-2" aria-hidden="true"></i> {{ contact.email }} </p>
+                            <hr>
+                            <p><i class="fa fa-users p-2" aria-hidden="true"></i> {{ contact.category }} </p>
+                        </div>
+{#                        <table class="table">#}
+{#                            <tr>#}
+{#                                <th>Name</th>#}
+{#                                <th>{{ contact.name }}</th>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <th>Contact</th>#}
+{#                                <th>{{ contact.contact }}</th>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <th>Email</th>#}
+{#                                <th>{{ contact.email }}</th>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <th>Category</th>#}
+{#                                <th>{{ contact.category }}</th>#}
+{#                            </tr>#}
+{#                        </table>#}
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
