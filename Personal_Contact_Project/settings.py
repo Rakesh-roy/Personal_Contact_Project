@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'contact.middleware.OneSessionPerUserMiddleware',
 ]
 
 ROOT_URLCONF = 'Personal_Contact_Project.urls'
@@ -115,10 +115,18 @@ USE_L10N = True
 
 USE_TZ = True
 
-django_heroku.settings(locals())
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

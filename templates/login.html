@@ -33,7 +33,10 @@
                                 <p class="text-danger text-center"><strong>{{ x }}</strong></p>
                             {% endfor %}
                         </div>
-                        <button type="submit" class="btn btn-info">Login</button>
+                        <label>
+                            <input type="checkbox" name="rememberme" class="checkbox"> remember me
+                        </label><br>
+                        <button type="submit" class="btn btn-info btn-block">Sign in</button>
                         <p class="float-right">New user? <a href="{% url 'register' %}">sign up</a></p>
                     </div>
                 </form>

@@ -20,3 +20,7 @@ class ContactModel(models.Model):
     def __str__(self):
         return self.name
 
+class LoggedInUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='logged_in_user')
+    # Session keys are 32 characters long
+    session_key = models.CharField(max_length=32, null=True, blank=True)

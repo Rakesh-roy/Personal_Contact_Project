@@ -1,7 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from contact.models import ContactModel
+
+from Personal_Contact_Project import settings
+from contact.models import ContactModel, LoggedInUser
 from contact.forms import ContactForm, UserRegistrationForm
 import requests
 import json
@@ -14,7 +17,14 @@ def contactHome(request):
     # url = requests.get('http://127.0.0.1:8000/api.contacts/')
     # data = json.loads(url.text)
     data = ContactModel.objects.filter(owner=request.user).order_by('name')
-    return render(request,'index.html',{'contacts':data})
+    return render(request, 'index.html', {'contacts': data})
+    # try:
+    #     user = LoggedInUser.objects.get(user_id=request.user.id)
+    #     if user.session_key:
+    #         data = ContactModel.objects.filter(owner=request.user).order_by('name')
+    #         return render(request,'index.html',{'contacts':data})
+    # except:
+    #     return HttpResponse("you are not allowed to access this page..!!")
 
 
 @login_required(login_url='login')
@@ -38,10 +48,14 @@ def viewContact(request):
 
 
 def loginUser(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        return redirect('home')
+    elif request.method == 'POST':
         uname = request.POST.get('username')
         pwd = request.POST.get('password')
-
+        rememberme = request.POST.get('rememberme')
+        if rememberme is not None:
+            settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = False
         user = authenticate(username=uname, password=pwd)
         if user is not None:
             login(request, user=user)
